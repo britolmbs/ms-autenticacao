@@ -1,4 +1,5 @@
 import express from "express";
+import bearerAuthenticationMidleware from "./middlewares/bearer-authentication.middleware";
 import errorHandler from "./middlewares/error-handler.middleware";
 import authorizationRoute from "./routes/authorization.routes";
 import statusRoute from "./routes/status.route";
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuração de Rotas
-app.use(usersRoute);
+app.use(bearerAuthenticationMidleware,usersRoute);
 app.use(statusRoute);
 app.use(authorizationRoute);
 
