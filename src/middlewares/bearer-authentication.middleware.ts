@@ -3,9 +3,9 @@ import ForbiddenError from '../models/errors/forbidden.error.model';
 import JWT from 'jsonwebtoken';
 import userRepository from '../repositories/user.repository';
 
-async function bearerAuthenticationMidleware(req: Request, res: Response, next: NextFunction) {
+ async function bearerAuthenticationMidleware(req: Request, res: Response, next: NextFunction) {
 
-    try {
+    try{
         const authotizationHeader = req.headers['authorization'];
 
         if (!authotizationHeader) {
@@ -14,31 +14,30 @@ async function bearerAuthenticationMidleware(req: Request, res: Response, next: 
 
         const [authorizationType, token] = authotizationHeader.split(' ');
 
-        if (authorizationType !== 'Bearer' || !token) {
+        if(authorizationType !== 'Bearer' || !token) {
             throw new ForbiddenError('Tipo de autorização inválida');
         }
 
         const tokenPayload = JWT.verify(token, 'my_secret_key');
 
+        
 
-
-        if (typeof tokenPayload !== 'object' || !tokenPayload.sub) {
+        if(typeof tokenPayload !== 'object' || !tokenPayload.sub) {
             throw new ForbiddenError('Token Ivalido');
         }
 
         const uuid = tokenPayload.sub;
 
-        const user = {
-            uuid: tokenPayload.sub,
-            username: tokenPayload.username
-        };
+     const user = {uuid: tokenPayload.sub,
+    username: tokenPayload.username
+};
 
-        req.user = user;
-        next();
-    } catch (error) {
+     req.user = user;
+    next();
+    }catch(error){
         next(error);
     }
-
+    
 
 }
 
