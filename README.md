@@ -1,4 +1,4 @@
-# ms-autenticação
+# ms-autenticação.
 
 Este é um microserviço de autenticação simples utilizando JSON Web Tokens (JWT), desenvolvido em Node.js com Express.
 
